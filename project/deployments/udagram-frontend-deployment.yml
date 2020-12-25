@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: udagram-frontend
+    version: v2
+  name: udagram-frontend
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 25%
+  selector:
+      matchLabels:
+        service: udagram-frontend
+  template:
+    metadata:
+      labels:
+        service: udagram-frontend
+        version: v2
+    spec:
+      containers:
+      - image: mariam8mohamed/udagram-frontend
+        name: udagram-frontend
+        imagePullPolicy: Always
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds:  5
+          periodSeconds: 5
+          successThreshold: 1  
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"                        
+      restartPolicy: Always
