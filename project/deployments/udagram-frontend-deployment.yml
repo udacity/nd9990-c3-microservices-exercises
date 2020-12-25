@@ -24,19 +24,6 @@ spec:
       containers:
       - image: mariam8mohamed/udagram-frontend
         name: udagram-frontend
-        imagePullPolicy: Always
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds:  5
-          periodSeconds: 5
-          successThreshold: 1  
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"                        
+        ports:
+        - containerPort: 80                       
       restartPolicy: Always
