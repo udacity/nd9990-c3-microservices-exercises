@@ -24,21 +24,8 @@ spec:
       containers:
       - image: mariam8mohamed/udagram-restapi-user
         name: restapi-user 
-        imagePullPolicy: Always
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds:  5
-          periodSeconds: 5
-          successThreshold: 1
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "1024Mi"
-            cpu: "500m"      
+        ports:
+        - containerPort: 80
         env:
         - name: URL
           valueFrom:
@@ -85,14 +72,5 @@ spec:
             secretKeyRef:
               name: env-secret
               key: POSTGRESS_USERNAME      
-        volumeMounts:
-        - name: aws-secret
-          mountPath: "/root/.aws/"
-          readOnly: true        
       restartPolicy: Always
-      volumes:
-      - name: aws-secret
-        secret:
-          secretName: aws-secret
-
 
