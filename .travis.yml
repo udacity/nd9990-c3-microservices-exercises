@@ -21,7 +21,7 @@ script:
 
 
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_USERNAME" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push mariam8mohamed/udagram-restapi-feed:latest
   - docker push mariam8mohamed/udagram-restapi-user:latest
   - docker push mariam8mohamed/udagram-frontend:latest
