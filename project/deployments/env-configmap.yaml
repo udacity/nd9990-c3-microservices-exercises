@@ -5,8 +5,8 @@ data:
   AWS_PROFILE: App-Access
   AWS_REGION: us-west-1
   JWT_SECRET: helloworld
-  POSTGRESS_DB: udagrammariamdev
-  POSTGRESS_HOST: udagrammariamdev.cvrglt9ge1w4.us-west-1.rds.amazonaws.com
+  POSTGRESS_DB: mariamudagramdev
+  POSTGRESS_HOST: mariamudagramdev.cvrglt9ge1w4.us-west-1.rds.amazonaws.com
   URL: http://localhost:8080  
 metadata:
   name: env-config
