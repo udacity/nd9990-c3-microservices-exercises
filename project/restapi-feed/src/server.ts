@@ -6,7 +6,7 @@ import {IndexRouter} from './controllers/v0/index.router';
 
 import bodyParser from 'body-parser';
 import {config} from './config/config';
-import {V0_FEED_MODELS, V0_USER_MODELS} from './controllers/v0/model.index';
+import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
 
 (async () => {
@@ -37,7 +37,10 @@ import {V0_FEED_MODELS, V0_USER_MODELS} from './controllers/v0/model.index';
     res.send( '/api/v0/' );
   } );
 
-
+  app.get( '/health', async ( req, res ) => {
+    res.status(200).send('is healthy');
+  });
+  
   // Start the Server
   app.listen( port, () => {
     console.log( `server running ${config.url}` );
