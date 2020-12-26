@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   labels:
     service: reverse-proxy
-    #version: v2
   name: reverse-proxy
 spec:
   replicas: 2
