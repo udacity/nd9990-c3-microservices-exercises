@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - 12
+
+services:
+  - docker
+
+  #pre-testing installs
+install:
+  - echo "nothing needs to be installed"
+  
+  #scripts to be run such as tests
+before_script:
+  - echo "no tests"
+
+script:
+  - docker --version
+  - docker build ./project/restapi-feed -t mariam8mohamed/udagram-restapi-feed:latest
+  - docker build ./project/restapi-user -t mariam8mohamed/udagram-restapi-user:latest
+  - docker build ./project/udagram-frontend -t mariam8mohamed/udagram-frontend:latest
+
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push mariam8mohamed/udagram-restapi-feed:latest
+  - docker push mariam8mohamed/udagram-restapi-user:latest
+  - docker push mariam8mohamed/udagram-frontend:latest
