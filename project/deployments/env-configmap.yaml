@@ -7,7 +7,7 @@ data:
   JWT_SECRET: helloworld
   POSTGRES_DB: mariamudagramdev
   POSTGRES_HOST: mariamudagramdev.cvrglt9ge1w4.us-west-1.rds.amazonaws.com
-  URL: a2bd02f6317c641628de0bc8cbb73cf1-1366162949.us-west-1.elb.amazonaws.com:8100  
+  URL: http://a2bd02f6317c641628de0bc8cbb73cf1-1366162949.us-west-1.elb.amazonaws.com:8100
 metadata:
   name: env-config
   
