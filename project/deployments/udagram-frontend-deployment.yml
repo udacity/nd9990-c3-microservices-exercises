@@ -25,5 +25,5 @@ spec:
       - image: mariam8mohamed/udagram-frontend
         name: udagram-frontend
         ports:
-        - containerPort: 80                       
+        - containerPort: 80                      
       restartPolicy: Always

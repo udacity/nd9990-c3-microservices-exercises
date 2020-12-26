@@ -25,7 +25,13 @@ spec:
       - image: mariam8mohamed/udagram-restapi-feed
         name: restapi-feed
         ports:
-        - containerPort: 80                   
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3               
         env:
         - name: URL
           valueFrom:
