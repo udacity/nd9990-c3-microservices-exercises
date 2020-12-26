@@ -25,5 +25,12 @@ spec:
       - image: mariam8mohamed/udagram-frontend
         name: udagram-frontend
         ports:
-        - containerPort: 80                      
+        - containerPort: 80 
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"                     
       restartPolicy: Always

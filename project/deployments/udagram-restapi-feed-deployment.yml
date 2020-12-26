@@ -26,6 +26,13 @@ spec:
         name: restapi-feed
         ports:
         - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"                
         livenessProbe:
           httpGet:
             path: /health

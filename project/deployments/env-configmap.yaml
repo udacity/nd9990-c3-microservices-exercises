@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 data:
-  AWS_BUCKET: udagramdev-1
+  AWS_BUCKET: test-dev-00
   AWS_PROFILE: App-Access
   AWS_REGION: us-west-1
   JWT_SECRET: helloworld
   POSTGRES_DB: mariamudagramdev
   POSTGRES_HOST: mariamudagramdev.cvrglt9ge1w4.us-west-1.rds.amazonaws.com
-  URL: http://localhost:8080  
+  URL: a2bd02f6317c641628de0bc8cbb73cf1-1366162949.us-west-1.elb.amazonaws.com:8100  
 metadata:
   name: env-config
   
