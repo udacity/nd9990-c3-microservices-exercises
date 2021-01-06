@@ -1,0 +1,4 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+  "image": "hashicorp/terraform:0.14.3"
+}
