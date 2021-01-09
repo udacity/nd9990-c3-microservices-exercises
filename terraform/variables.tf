@@ -1,4 +1,4 @@
 variable "bucket_name" {
-  type = string
+  type    = string
   default = "xistz-cloud-developer-course4-test-bucket"
 }
