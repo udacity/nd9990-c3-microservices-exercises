@@ -1,28 +1,28 @@
-resource "aws_s3_bucket" "udagram" {
-  bucket = var.bucket_name
-  acl    = "private"
+# resource "aws_s3_bucket" "udagram" {
+#   bucket = var.bucket_name
+#   acl    = "private"
 
-  tags = {
-    Environment = "Dev"
-  }
+#   tags = {
+#     Environment = "Dev"
+#   }
 
-  cors_rule {
-    allowed_origins = ["*"]
-    allowed_headers = ["*"]
-    allowed_methods = ["PUT", "POST", "DELETE"]
-  }
+#   cors_rule {
+#     allowed_origins = ["*"]
+#     allowed_headers = ["*"]
+#     allowed_methods = ["PUT", "POST", "DELETE"]
+#   }
 
-  force_destroy = true
-}
+#   force_destroy = true
+# }
 
-resource "aws_s3_bucket_public_access_block" "udagram" {
-  bucket = aws_s3_bucket.udagram.id
+# resource "aws_s3_bucket_public_access_block" "udagram" {
+#   bucket = aws_s3_bucket.udagram.id
 
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
+#   block_public_acls       = true
+#   block_public_policy     = true
+#   ignore_public_acls      = true
+#   restrict_public_buckets = true
+# }
 
 # if required
 # data "aws_iam_policy_document" "udagram_bucket" {
@@ -41,3 +41,17 @@ resource "aws_s3_bucket_public_access_block" "udagram" {
 #     ]
 #   }
 # }
+
+resource "aws_db_instance" "udagram" {
+  identifier           = var.db_identifier
+  allocated_storage    = 20
+  storage_type         = "gp2"
+  engine               = "postgres"
+  engine_version       = "12.4"
+  instance_class       = "db.t2.micro"
+  name                 = var.db_name
+  username             = "udagram"
+  password             = var.db_password
+  parameter_group_name = "default.postgres12"
+  skip_final_snapshot  = true
+}
