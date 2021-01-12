@@ -53,5 +53,6 @@ resource "aws_db_instance" "udagram" {
   username             = "udagram"
   password             = var.db_password
   parameter_group_name = "default.postgres12"
+  publicly_accessible  = true
   skip_final_snapshot  = true
 }
