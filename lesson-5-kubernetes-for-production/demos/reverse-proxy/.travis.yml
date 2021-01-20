@@ -16,9 +16,9 @@ before_script:
 script:
   - docker --version # print the version for logging
   - docker build -t simple-reverse-proxy .
-  - docker tag simple-reverse-proxy DOCKER_HUB_ACCOUNT/simple-reverse-proxy:latest
+  - docker tag simple-reverse-proxy manickaa/simple-reverse-proxy:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push DOCKER_HUB_ACCOUNT/simple-reverse-proxy
+  - docker push manickaa/simple-reverse-proxy
 
