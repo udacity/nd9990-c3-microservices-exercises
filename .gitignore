@@ -4,3 +4,5 @@
 ._*
 node_modules
 set_env.sh
+package-lock.json
+config.json

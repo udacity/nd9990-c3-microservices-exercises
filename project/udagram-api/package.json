@@ -25,9 +25,11 @@
     "email-validator": "^2.0.4",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
-    "pg": "^7.9.0",
+    "pg": "^7.18.2",
+    "pg-hstore": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^5.21.4",
+    "sequelize-cli": "^6.2.0",
     "sequelize-typescript": "^0.6.9"
   },
   "devDependencies": {
@@ -44,6 +46,7 @@
     "eslint": "^6.8.0",
     "eslint-config-google": "^0.14.0",
     "mocha": "^6.1.4",
+    "sequelize-typescript-migration": "0.0.1-beta.3",
     "ts-node-dev": "^1.0.0-pre.32",
     "typescript": "^3.3.4000"
   }
