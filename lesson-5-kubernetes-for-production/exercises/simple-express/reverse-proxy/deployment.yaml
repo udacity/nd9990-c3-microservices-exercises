@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverse-proxy
+  labels:
+    service: reverse-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: reverse-proxy
+  template:
+    metadata:
+      labels:
+        service: reverse-proxy
+    spec:
+      containers:
+      - name: envoy-front-proxy
+        image: hghar/envoy-front-proxy
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
