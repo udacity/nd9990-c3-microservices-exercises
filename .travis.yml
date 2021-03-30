@@ -1,0 +1,25 @@
+language: minimal
+
+services:
+  - docker
+
+script:
+  - echo "Starting to build udagram images"
+  - docker --version # print the version for logging
+  - docker build -t udagram-feed-api ./project/udagram-feed-api/
+  - docker tag udagram-feed-api hghar/udagram-feed-api:latest
+  - docker build -t udagram-users-api ./project/udagram-users-api/
+  - docker tag udagram-users-api hghar/udagram-users-api:latest
+  - docker build -t udagram-frontend ./project/udagram-frontend/
+  - docker tag udagram-frontend hghar/udagram-frontend:latest
+  - docker build -t udagram-reverse-proxy ./project/udagram-reverse-proxy/
+  - docker tag udagram-reverse-proxy hghar/udagram-reverse-proxy:latest
+
+after_success:
+  - echo "Pushing images to repository"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push hghar/udagram-feed-api
+  - docker push hghar/udagram-users-api
+  - docker push hghar/udagram-frontend
+  - docker push hghar/udagram-reverse-proxy
+
