@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: users-api
+  name: users-api-svc
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/users-api-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: users-api
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-api
+  labels:
+    app: users-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users-api
+  template:
+    metadata:
+      labels:
+        app: users-api
+    spec:
+      containers:
+      - name: users-api
+        image: hghar/udagram-users-api
+        env:
+          - name: POSTGRES_DB
+            value: udagram
+          - name: AWS_REGION
+            value: us-east-2
+          - name: AWS_PROFILE
+            value: personal
+          - name: AWS_BUCKET
+            value: udagram-microservices-531377840843-dev
+          - name: URL
+            value: http://users-api-svc:8080
+          # secrets
+          - name: POSTGRES_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: udagram-database-credentials
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: udagram-database-credentials
+                key: password
+          - name: POSTGRES_HOST
+            valueFrom:
+              secretKeyRef:
+                name: udagram-database-credentials
+                key: host
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: udagram-jwt-secret
+                key: secret
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
