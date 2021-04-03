@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: feed-api
+  name: feed-api-svc
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/feed-api-svc
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: feed-api
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: feed-api
+  labels:
+    app: feed-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feed-api
+  template:
+    metadata:
+      labels:
+        app: feed-api
+    spec:
+      containers:
+      - name: feed-api
+        image: hghar/udagram-feed-api
+        env:
+          - name: POSTGRES_DB
+            value: udagram
+          - name: AWS_REGION
+            value: us-east-2
+          - name: AWS_PROFILE
+            value: personal
+          - name: AWS_BUCKET
+            value: udagram-microservices-531377840843-dev
+          - name: URL
+            value: http://feed-api-svc:8080
+          # secrets
+          - name: POSTGRES_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: udagram-database-credentials
+                key: username
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: udagram-database-credentials
+                key: password
+          - name: POSTGRES_HOST
+            valueFrom:
+              secretKeyRef:
+                name: udagram-database-credentials
+                key: host
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: udagram-jwt-secret
+                key: secret
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: udagram-api
+  name: udagram-api-svc
+spec:
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 8080
+  selector:
+    service: udagram-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udagram-api
+  labels:
+    service: udagram-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: udagram-api
+  template:
+    metadata:
+      labels:
+        service: udagram-api
+    spec:
+      containers:
+      - name: udagram-reverse-proxy
+        image: hghar/udagram-reverse-proxy
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
