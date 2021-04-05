@@ -4,6 +4,8 @@ dotenv.config();
 import cors from 'cors';
 import express from 'express';
 import {sequelize} from './sequelize';
+import pino from 'pino';
+import pinoExpress from 'pino-http';
 
 import {IndexRouter} from './controllers/v0/index.router';
 
@@ -17,6 +19,12 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
   const app = express();
   const port = process.env.PORT || 8080;
+
+  const logger = pino();
+  const expressLogger = pinoExpress({
+    logger,
+  });
+  app.use(expressLogger);
 
   app.use(bodyParser.json());
 
@@ -40,7 +48,7 @@ import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
   // Start the Server
   app.listen( port, () => {
-    console.log( `server running ${config.url}` );
-    console.log( `press CTRL+C to stop server` );
+    logger.info(`server running ${config.url}`);
+    logger.info(`press CTRL+C to stop server`);
   } );
 })();
