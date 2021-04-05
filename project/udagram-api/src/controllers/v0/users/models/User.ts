@@ -17,7 +17,7 @@ export class User extends Model<User> {
   @UpdatedAt
   public updatedAt: Date = new Date();
 
-  short() {
+  short(): string {
     return {
       email: this.email,
     };
