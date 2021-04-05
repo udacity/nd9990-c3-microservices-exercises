@@ -70,7 +70,8 @@ spec:
                 name: udagram-jwt-secret
                 key: secret
         ports:
-        - containerPort: 8080
+          - name: http
+            containerPort: 8080
         livenessProbe:
           httpGet:
             path: /
