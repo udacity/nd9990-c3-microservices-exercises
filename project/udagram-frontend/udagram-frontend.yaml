@@ -8,10 +8,8 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: udagram
+    app: udagram-frontend
   type: LoadBalancer
-status:
-  loadBalancer: {}
 ---
 apiVersion: apps/v1
 kind: Deployment
