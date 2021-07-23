@@ -1,7 +1,7 @@
 # Overview - Udagram Image Filtering Microservice
 The project application, **Udagram** - an Image Filtering application, allows users to register and log into a web client, and post photos to a feed.
 
-This section details how to set up your local environment remote dependencies to be able to configure and run the starter project.
+This section introduces the project followed by instructions on how to set up your local environment remote dependencies to be able to configure and run the starter project.
 
 ## Components
 At a high level, the project has 2 main components:
@@ -173,7 +173,7 @@ Afterwards, you can enter `\q` to quit.
 
 
 
-
+#### TODO BELOW
 
 ## Set up the Environment variables to store sensitive information
 
