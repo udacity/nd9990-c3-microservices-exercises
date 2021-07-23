@@ -1,12 +1,14 @@
 # Overview - Udagram Image Filtering Microservice
 The project application, **Udagram** - an Image Filtering application, allows users to register and log into a web client, and post photos to a feed.
 
+This section details how to set up your local environment remote dependencies to be able to configure and run the starter project.
+
 ## Components
 At a high level, the project has 2 main components:
 1. Frontend Web App - Angular web application built with Ionic Framework
 2. Backend RESTful API - Node-Express application
 
-## Goal
+## Project Goal
 In this project you will:
 - Refactor the monolith application to microservices
 - Set up each microservice to be run in its own Docker container
@@ -56,7 +58,7 @@ Using PostgreSQL involves a server and a client. The server hosts the database w
 ### Instructions
 The easiest way to set this up is with the [PostgreSQL Installer](https://www.postgresql.org/download/). This installer installs a PostgreSQL client in the form of the `psql` command line utility.
 
-## Ionic CLI v6
+## Ionic CLI
 Ionic Framework is used to make cross-platform applications using JavaScript. It is used to help build and run Udagram.
 
 ### Instructions
@@ -93,109 +95,85 @@ kubectl is the command line tool to interface with Kubernetes. We will be using 
 ### Instructions
 Follow the [instructions here](https://kubernetes.io/docs/tasks/tools/#kubectl).
 
+# Project Prerequisites
+To run this project, you are expected to have:
+1. An S3 bucket
+2. A PostgreSQL database
 
+## S3 Bucket
+The project uses an AWS S3 bucket to store image files.
 
-## placeholder
+### Instructions
+1. Navigate to S3 from the AWS console.
+2. Create a public S3 bucket with default configurations (eg. no versioning, disable encryption).
+3. In your newly-created S3 bucket, go to the **Permissions** tab and add an additional bucket policy to enable access for other AWS services (ie. Kubernetes).
 
-
-In addition to the tools above, fork and then clone the project starter code from the <a href="https://github.com/udacity/nd9990-c3-microservices-exercises/tree/master/project" target="_blank">Udacity GitHub repository</a>.
-
-
-
-# Getting started
-To understand how you project will be assessed, see the <a href="https://review.udacity.com/#!/rubrics/2804/view" target="_blank">Project Rubric</a>
-
-Let's begin with setting up the resources that you will need while running the application either locally or on the cloud. 
-
-## Set up an S3 bucket to store pictures
-The steps you need to follow are:
-
-1. Create a public S3 bucket with default configuration, such as no versioning and disabled encryption. 
-1. Once your bucket is created, go to the **Permissions** tab. Add bucket policy allowing other AWS services (Kubernetes) to access the bucket contents. You can use the <a href="https://awspolicygen.s3.amazonaws.com/policygen.html" target="_blank">policy generator</a> tool to generate such an IAM policy. See an example below (change the bucket name in your case).
-```json
-{
- "Version":"2012-10-17",
- "Statement":[
-     {
-         "Sid":"Stmt1625306057759",
-         "Principal":"*",
-         "Action":"s3:*",
-         "Effect":"Allow",
-         "Resource":"arn:aws:s3:::test-nd9990-dev-wc"
-     }
- ]
-}
-```
-
-1. Add the <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/ManageCorsUsing.html#cors-example-1" target="_blank">CORS configuration</a> to allow the application running outside of AWS to interact with your bucket. You can use the following configuration:
-```json
-[
-	{
-		"AllowedHeaders":[
-			"*"
-		],
-		"AllowedMethods":[
-			"POST",
-			"GET",
-			"PUT",
-			"DELETE",
-			"HEAD"
-		],
-		"AllowedOrigins":[
-			"*"
-		],
-		"ExposeHeaders":[
-			
-		]
-	}
-]
-```
-
-
- Note: In the S3 console, the CORS configuration must be JSON format. Whereas, the CLI can use either JSON or XML format.
-
-4. Once the policies above are set, you can disable public access to your bucket.
-
-## Set up AWS RDS - PostgreSQL database to store user credentials
-You will access this database from your application running either locally or on the cloud. 
-
-Here are the steps to follow:
-1. Navigate to the <a href="https://console.aws.amazon.com/rds/home" target="_blank">RDS dashboard</a> and create a PostgreSQL database with the following configuration, and leave the remaining fields as default.
-
-<center>
-
-|**Field**|**Value**|
-|---|---|
-|Database creation method|**Standard create**. <br>Easy create option creates <br>a private database by default. |
-|Engine option|PostgreSQL 12 or higher|
-| Templates |Free tier|
-| DB instance identifier, <br>master username, and password|Your choice|
-|DB instance class|Burstable classes with minimal size |
-|VPC and subnet |Default|
-|Public access|YES. Allow application running outside <br> of your AWS account discover the database.|
-|VPC security group|Either choose default or <br>create a new one|
-| Availability Zone|No preferencce|
-|Database port|`5432` (default)|
-</center>
-2. Once the database is created successfully, copy and save the database endpoint, master username, and password to your local machine. It will help your application discover the database. 
-
-3. Edit the security group's inbound rule to allow incoming connections from anywhere (`0.0.0.0/0`). It will allow your application running locally connecting to the database. 
-
-4. Test the connection from your local PostgreSQL client.
-```bash
-# Assuming the endpoint is: mypostgres-database-1.c5szli4s4qq9.us-east-1.rds.amazonaws.com
-psql -h mypostgres-database-1.c5szli4s4qq9.us-east-1.rds.amazonaws.com -U [your-username] postgres
-# Provide the database password that you had set in the step above
-# It will open the "postgres=>" prompt if the connection is successful
-```
-Later, when your application up and running, you can run commands like:
-```bash
-# List the databases
-\list
-# Go inside the "postgres" database and view relations
-\c postgres
-\dt
+   You can use the <a href="https://awspolicygen.s3.amazonaws.com/policygen.html" target="_blank">policy generator</a> tool to generate such an IAM policy. See an example below (change the bucket name in your case).
+   ```json
+   {
+   "Version":"2012-10-17",
+   "Statement":[
+         {
+            "Sid":"Stmt1625306057759",
+            "Principal":"*",
+            "Action":"s3:*",
+            "Effect":"Allow",
+            "Resource":"arn:aws:s3:::test-nd9990-dev-wc"
+         }
+      ]
+   }
    ```
+
+   > In the AWS S3 console, the CORS configuration must be JSON format. Whereas, the AWS CLI can use either JSON or XML format.
+
+   > Once the policies above are set and you are no longer testing locally, you can disable public access to your bucket.
+
+## PostgreSQL Database
+We will create a PostgreSQL database using AWS RDS. This is used by the project to store user metadata.
+
+### Instructions
+1. Navigate to RDS from the AWS console.
+2. Create a PostgreSQL database with the following configurations:
+
+   <center>
+
+   |**Field**|**Value**|
+   |---|---|
+   |Database Creation Method|Standard create |
+   |Engine Option|PostgreSQL 12 or greater|
+   |Templates |Free tier <small>(if no Free tier is available, select a different PostgreSQL version)</small>|
+   |DB Instance Identifier|Your choice|
+   |Master Username|Your choice|
+   |Password|Your choice|
+   |DB Instance Class|Burstable classes with minimal size |
+   |VPC and Subnet |Default|
+   |Public Access|Yes|
+   |Database Authentication|Password authentication|
+   |VPC security group|Either choose default or <br>create a new one|
+   |Availability Zone|No preferencce|
+   |Database port|`5432` (default)|
+   </center>
+
+2. Once the database is created successfully (this will take a few minutes), copy and save the database endpoint, master username, and password to your local machine. These values are required for the application to connect to the database.
+
+3. Edit the security group's inbound rule to allow incoming connections from anywhere (`0.0.0.0/0`). This will allow an application that is running locally to connect to the database. 
+
+### Verify Connection
+Test the connection from your local PostgreSQL client.
+Assuming the endpoint is: `mypostgres-database-1.c5szli4s4qq9.us-east-1.rds.amazonaws.com`, you can run:
+```bash
+psql -h mypostgres-database-1.c5szli4s4qq9.us-east-1.rds.amazonaws.com -U [your-username] postgres
+# Provide the database password when prompted
+```
+If your connection is succesful, your terminal should print ` "postgres=>"`.
+
+You can play around with some `psql` commands found [here](https://www.postgresql.org/docs/13/app-psql.html).
+
+Afterwards, you can enter `\q` to quit.
+
+
+
+
 
 ## Set up the Environment variables to store sensitive information
 
@@ -243,3 +221,16 @@ setx URL http://localhost:8100
 ```
 
 
+
+
+## placeholder
+
+
+In addition to the tools above, fork and then clone the project starter code from the <a href="https://github.com/udacity/nd9990-c3-microservices-exercises/tree/master/project" target="_blank">Udacity GitHub repository</a>.
+
+
+
+# Getting started
+To understand how you project will be assessed, see the <a href="https://review.udacity.com/#!/rubrics/2804/view" target="_blank">Project Rubric</a>
+
+Let's begin with setting up the resources that you will need while running the application either locally or on the cloud. 
