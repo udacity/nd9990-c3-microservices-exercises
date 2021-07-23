@@ -12,6 +12,7 @@ The project is split into two parts:
 ### Prerequisite
 1. The depends on the Node Package Manager (NPM). You will need to download and install Node from [https://nodejs.com/en/download](https://nodejs.org/en/download/). This will allow you to be able to run `npm` commands.
 2. Environment variables will need to be set. These environment variables include database connection details that should not be hard-coded into the application code.
+
 #### Environment Script
 A file named `set_env.sh` has been prepared as an optional tool to help you configure these variables on your local development environment.
  
@@ -21,7 +22,14 @@ We do _not_ want your credentials to be stored in git. After pulling this `start
 Afterwards, we can prevent the file from being included in your solution by adding the file to our `.gitignore` file.
 
 ### Database
-Create a PostgreSQL database either locally or on AWS RDS. Set the config values for environment variables prefixed with `POSTGRES_` in `set_env.sh`.
+Create a PostgreSQL database either locally or on AWS RDS.
+* We will need to use password authentication for this project. This means that a username and password is needed to authenticate and access the database.
+* The port number will need to be set as `5432`. This is the typical port that is used by PostgreSQL so it is usually set to this port by default.
+
+Once your database is set up, set the config values for environment variables prefixed with `POSTGRES_` in `set_env.sh`.
+* If you set up a local database, your `POSTGRES_HOST` is most likely `localhost`
+* If you set up an RDS database, your `POSTGRES_HOST` is most likely in the following format: `***.****.us-west-1.rds.amazonaws.com`. You can find this value in the AWS console's RDS dashboard.
+
 
 ### S3
 Create an AWS S3 bucket. Set the config values for environment variables prefixed with `AWS_` in `set_env.sh`.
