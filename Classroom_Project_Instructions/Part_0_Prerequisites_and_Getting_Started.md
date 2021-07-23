@@ -20,9 +20,9 @@ You should have the following tools installed in your local machine:
 * Git
 * Node.js
 * PostgreSQL client
-* Ionic CLI v6
+* Ionic CLI
 * Docker
-* AWS CLI v2
+* AWS CLI
 * kubectl
 
 We will provide some details and tips on how to set up the mentioned prerequisites. In general, we will opt to defer you to official installation instructions as these can change over time.
@@ -76,17 +76,23 @@ Docker is needed to build and run containerized applications.
 ### Instructions
 Follow the instructions for [Docker Desktop](https://docs.docker.com/desktop/#download-and-install) to install Docker.
 
-## AWS CLI v2
+## AWS CLI
 We use AWS CLI to interface programmatically with AWS.
 
 ### Instructions
-Follow [these instructions](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) to set up AWS CLI v2.
+Follow [these instructions](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) to set up AWS CLI.
 
 After it's installed, you will need to configure an AWS access profile locally so that our local environment knows how to access your AWS account:
 1. Create an IAM user with admin privileges on the AWS web console. Copy its Access Key.
 2. Configure the access profile locally using your Access Key:
 ```bash
 aws configure [--profile nd9990]
+```
+
+### Verify Installation
+```bash
+# aws-cli/2.0.0 or greater
+aws --version
 ```
 
 ## kubectl
