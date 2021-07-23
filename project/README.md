@@ -67,8 +67,10 @@ Create an AWS S3 bucket. Set the config values for environment variables prefixe
     ```bash
     npx eslint --ext .js,.ts src/ --fix
     ```
-4. Over time, our code will become outdated and inevitably run into security vulnerabilities. To address them, you can run:
+4. Over time, code inevitably becomes outdated. To make a best-attempt effort at resolving these, you can run the following command::
     ```bash
     npm audit fix
     ```
+    Note that running this command won't always resolve all of your packages -- nor is it expected to. There can be situations where some packages are updated in a way where they are simply incompatible with one another. You will likely experience these scenarios in real-world JavaScript projects and it's often a case-by-case basis on weighing the priority of whether a package should or even can be upgraded. This is considered out of scope for our project so don't worry about warnings messages from this command!
+
 5. In `set_env.sh`, environment variables are set with `export $VAR=value`. Setting it this way is not permanent; every time you open a new terminal, you will have to run `set_env.sh` to reconfigure your environment variables. To verify if your environment variable is set, you can check the variable with a command like `echo $POSTGRES_USERNAME`.
