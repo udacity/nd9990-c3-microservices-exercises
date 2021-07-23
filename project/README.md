@@ -22,7 +22,7 @@ We do _not_ want your credentials to be stored in git. After pulling this `start
 Afterwards, we can prevent the file from being included in your solution by adding the file to our `.gitignore` file.
 
 ### 1. Database
-Create a PostgreSQL database either locally or on AWS RDS. The database is used to store the application's metadata. The [PostgreSQL installer](https://www.postgresql.org/download/) is an easy way to set up a PostgreSQL server and tooling locally.
+Create a PostgreSQL database either locally or on AWS RDS. The database is used to store the application's metadata.
 
 * We will need to use password authentication for this project. This means that a username and password is needed to authenticate and access the database.
 * The port number will need to be set as `5432`. This is the typical port that is used by PostgreSQL so it is usually set to this port by default.
