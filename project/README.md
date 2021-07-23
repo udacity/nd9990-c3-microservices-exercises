@@ -22,7 +22,8 @@ We do _not_ want your credentials to be stored in git. After pulling this `start
 Afterwards, we can prevent the file from being included in your solution by adding the file to our `.gitignore` file.
 
 ### 1. Database
-Create a PostgreSQL database either locally or on AWS RDS.
+Create a PostgreSQL database either locally or on AWS RDS. The database is used to store the application's metadata.
+
 * We will need to use password authentication for this project. This means that a username and password is needed to authenticate and access the database.
 * The port number will need to be set as `5432`. This is the typical port that is used by PostgreSQL so it is usually set to this port by default.
 
@@ -32,9 +33,13 @@ Once your database is set up, set the config values for environment variables pr
 
 
 ### 2. S3
-Create an AWS S3 bucket. Set the config values for environment variables prefixed with `AWS_` in `set_env.sh`.
+Create an AWS S3 bucket. The S3 bucket is used to store images that are displayed in Udagram.
+
+Set the config values for environment variables prefixed with `AWS_` in `set_env.sh`.
 
 ### 3. Backend API
+Launch the backend API locally. The API is the application's interface to S3 and the database.
+
 * To download all the package dependencies, run the command from the directory `udagram-api/`:
     ```bash
     npm install .
@@ -46,6 +51,8 @@ Create an AWS S3 bucket. Set the config values for environment variables prefixe
 * You can visit `http://localhost:8080/api/v0/feed` in your web browser to verify that the application is running. You should see a JSON payload. Feel free to play around with Postman to test the API's.
 
 ### 4. Frontend App
+Launch the frontend app locally.
+
 * To download all the package dependencies, run the command from the directory `udagram-frontend/`:
     ```bash
     npm install .
