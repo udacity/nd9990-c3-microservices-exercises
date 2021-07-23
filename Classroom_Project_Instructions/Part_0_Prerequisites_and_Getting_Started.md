@@ -13,52 +13,90 @@ In this project you will:
 - Set up a Travis CI pipeline to push images to DockerHub
 - Deploy the DockerHub images to the Kubernetes cluster
 
-
-# Prerequisites
+# Local Prerequisites
 You should have the following tools installed in your local machine:
+* Git
+* Node.js
+* PostgreSQL client
+* Ionic CLI v6
+* Docker
+* AWS CLI v2
+* kubectl
 
-* <a href="https://git-scm.com/downloads" target="_blank">Git</a> for Mac/Linux/Windows. 
->Windows users: Once you download and install Git for Windows, you can execute all the bash, ssh, git commands in the **Gitbash** terminal. Whereas Windows users using [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/about) (WSL) can follow all steps as if they are Linux users.
+We will provide some details and tips on how to set up the mentioned prerequisites. In general, we will opt to defer you to official installation instructions as these can change over time.
 
+## Git
+Git is used to interface with GitHub. 
 
-* The following will help you run your project locally as a monolithic application.
-   1. PostgreSQL **client**, the `psql` command line utility, installed locally. 
-We will set the PostgreSQL server up in the AWS cloud. The client will help you to connect with the server. Usually, the client comes along with the [PostgreSQL](https://www.postgresql.org/download/) server installation, but you can install only the client using:
+> Windows users: Once you download and install Git for Windows, you can execute all the bash, ssh, git commands in the Gitbash terminal. On the other hand, Windows users using Windows Subsystem for Linux (WSL) can follow all steps as if they are Linux users.
+
+### Instructions
+Install [Git](https://git-scm.com/downloads) for your corresponding operating system.
+
+## Node.js
+### Instructions
+Install Node.js using [these instructions](https://nodejs.org/en/download/). We recommend a version between 12.14 and 14.15.
+
+This installer will install Node.js as well as NPM on your system. Node.js is used to run JavaScript-based applications and NPM is a package manager used to handle dependencies.
+
+### Verify Installation
 ```bash
-# Mac OS
-brew install libpq  
-brew link --force libpq 
-# Ubuntu
-sudo apt-get install postgresql-client
-# Windows, you need to install the complete server
+# v12.14 or greater up to v14.15
+node -v
 ```
-Otherwise, see the complete (server and client) installation instructions for [Mac](https://www.postgresqltutorial.com/install-postgresql-macos/), [Linux](https://www.postgresqltutorial.com/install-postgresql-linux/), and [Windows](https://www.postgresqltutorial.com/install-postgresql/). 
-   2. <a href="https://nodejs.org/en/download/" target="_blank">NodeJS</a> v12.14 or higher up to 13 - NodeJS installer will install both Node.js and npm on your system. Verify using the commands:
+
 ```bash
-# v12.14 or higher up to 13
-node -v 
-# v7.19 or higher
+# v7.19 or greater
 npm -v
-# You can upgrade to the latest version of npm using:
-npm install -g npm@latest
 ```
-   3. [Ionic command-line utility v6](https://ionicframework.com/docs/installation/cli) or higher framework to build and run the frontend application locally. Verify the installation as:
+
+## PostgreSQL client
+Using PostgreSQL involves a server and a client. The server hosts the database while the client interfaces with it to execute queries. Because we will be creating our server on AWS, we will only need to install a client for our local setup.
+
+### Instructions
+The easiest way to set this up is with the [PostgreSQL Installer](https://www.postgresql.org/download/). This installer installs a PostgreSQL client in the form of the `psql` command line utility.
+
+## Ionic CLI v6
+Ionic Framework is used to make cross-platform applications using JavaScript. It is used to help build and run Udagram.
+
+### Instructions
+Use [these instructions](https://ionicframework.com/docs/installation/cli) to install Ionic Framework with `npm`.
+
+#### Verify Installation
 ```bash
 # v6.0 or higher
 ionic --version
-# Otherwise, install a fresh version using
-npm install -g @ionic/cli
 ```
 
-* <a href="https://docs.docker.com/desktop/#download-and-install" target="_blank">Docker Desktop</a> for running the project locally in a multi-container environment
+## Docker
+Docker is needed to build and run containerized applications.
 
-* <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html" target="_blank">AWS CLI v2</a> for interacting with AWS services via your terminal. After installing the AWS CLI, you will also have to configure the access profile locally. 
-   * Create an IAM user with Admin privileges on the AWS web console. Copy its Access key. 
-   * Configure the access profile locally using the Access key generated above:
-   ```bash
-   aws configure [--profile nd9990]
-   ```
-* <a href="https://kubernetes.io/docs/tasks/tools/#kubectl" target="_blank">Kubectl</a> command-line utility to create and communicate with Kubernetes clusters
+### Instructions
+Follow the instructions for [Docker Desktop](https://docs.docker.com/desktop/#download-and-install) to install Docker.
+
+## AWS CLI v2
+We use AWS CLI to interface programmatically with AWS.
+
+### Instructions
+Follow [these instructions](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) to set up AWS CLI v2.
+
+After it's installed, you will need to configure an AWS access profile locally so that our local environment knows how to access your AWS account:
+1. Create an IAM user with admin privileges on the AWS web console. Copy its Access Key.
+2. Configure the access profile locally using your Access Key:
+```bash
+aws configure [--profile nd9990]
+```
+
+## kubectl
+kubectl is the command line tool to interface with Kubernetes. We will be using this to communicate with the EKS cluster that we create in AWS.
+
+### Instructions
+Follow the [instructions here](https://kubernetes.io/docs/tasks/tools/#kubectl).
+
+
+
+## placeholder
+
 
 In addition to the tools above, fork and then clone the project starter code from the <a href="https://github.com/udacity/nd9990-c3-microservices-exercises/tree/master/project" target="_blank">Udacity GitHub repository</a>.
 
