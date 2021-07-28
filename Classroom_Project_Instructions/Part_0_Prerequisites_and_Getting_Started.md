@@ -164,6 +164,8 @@ We will create a PostgreSQL database using AWS RDS. This is used by the project 
 
 3. Edit the security group's inbound rule to allow incoming connections from anywhere (`0.0.0.0/0`). This will allow an application that is running locally to connect to the database. 
 
+> Note: AWS RDS will automatically create a database with the name `postgres` if none is configured during the creation step. By following the setup instructions provided here, we will be using the default database name.
+
 ### Verify Connection
 Test the connection from your local PostgreSQL client.
 Assuming the endpoint is: `mypostgres-database-1.c5szli4s4qq9.us-east-1.rds.amazonaws.com`, you can run:
@@ -177,43 +179,52 @@ You can play around with some `psql` commands found [here](https://www.postgresq
 
 Afterwards, you can enter `\q` to quit.
 
+# Project Configuration
+Once the local and remote prerequisites are set up, we will need to configure our application so that they can connect and utilize them.
 
+## Fork and Clone the Project
+If you have not already done so, you will need to fork and clone the project so that you have your own copy to work with.
 
-#### TODO BELOW
-
-## Set up the Environment variables to store sensitive information
-
-Steps to follow:
-1. If not already, fork the project repository and clone it.
 ```bash
-git clone https://github.com/[Github-Username]/nd9990-c3-microservices-exercises.git
+git clone https://github.com/<YOUR_GITHUB_USERNAME>/nd9990-c3-microservices-exercises.git
+
 cd nd9990-c3-microservices-exercises/project/
 ```
 
-2. Your application will need to access the AWS PostgreSQL database and S3 bucket you created in the steps above. The connection details (confidential) of the database and S3 bucket should not be hard-coded into the application code. 
+## Configuration Values
+The application will need to connect to the AWS PostgreSQL database and S3 bucket that you have created.
 
- For this reason, create and stores the above details into multiple environment variables locally. 
-   - **Mac/Linux users** - Use the *set_env.sh* file present in the project directory to configure these variables on your local machine. Once you save your details in the *set_env.sh* file, run:
+We do **not** want to hard-code the configuration details into the application code. The code should not contain sensitive information (ie. username and password).
+
+For this reason, we will follow a common pattern to store our credentials inside environment variables. We'll explain how to set these values in Mac/Linux environments and Windows environments followed by an example.
+
+### Set Environment Variables in Mac/Linux
+#### Instructions
+1. Use the `set_env.sh` file present in the `project/` directory to configure these values on your local machine. This is a file that has been set up for your convenience to manage your environment.
+2. Prevent this file from being tracked in `git` so that your credentials don't become stored remotely:
+   ```bash
+   # Stop git from tracking the set_env.sh file
+   git rm --cached set_env.sh
+
+   # Prevent git from tracking the set_env.sh file
+   echo *set_env.sh >> .gitignore
+   ```
+3. Running the command `source set_env.sh` will set your environment variables.
+     > Note: The method above will set the environment variables temporarily. Every time you open a new terminal, you will have to run `source set_env.sh` to reconfigure your environment variables
+#### Verify Configurations
+1. Set the configuration values as environment variables:
 ```bash
-# Mac/Linux - Load the environment variables
 source set_env.sh
+```
+2. Verify that environment variables were set by testing one of the expected values:
+```bash
 echo $POSTGRES_USERNAME
-echo $URL
-``` 
-Also, you would not want your credentials to be stored in the Git repository either. Run the following command before pushing your project to Github, to tell git to stop tracking the script in git but keep it stored locally.
-```bash
-git rm --cached set_env.sh
-```
- In addition, add the *set_env.sh*  filename to your `.gitignore` file in the project repository. 
-> <font color=RED>**Note**</font>: The method above will set the environment variables temporarily. Meaning, every time you open a new terminal, you will have to run `source set_env.sh` to reconfigure your environment variables
-<br><br>
-
-   - **Mac/Linux users** - To set the environment variables permanently, save all the variables above in your `~/.bashrc` / `~/.profile` / `~/.zshrc` file and use:
-```bash
-source ~/.profile
 ```
 
-   - **Windows users** - Set all the environment variables as shown in the *set_env.sh* file either using the **Advanced System Settings** or run the following in the GitBash terminal (change the values, as applicable to you):
+### Set Environment Variables in Windows
+Set all the environment variables as shown in the `set_env.sh` file either using the **Advanced System Settings** or d GitBash/WSL terminal.
+
+Below is an example. Make sure that you replace the values with ones that are applicable to the resources that you created in AWS.
 ```bash
 setx POSTGRES_USERNAME postgres
 setx POSTGRES_PASSWORD abcd1234
@@ -226,17 +237,8 @@ setx JWT_SECRET hello
 setx URL http://localhost:8100
 ```
 
+# Get Started!
+Now that we have our prerequsites set up and configured, we will be following up this section with an overview of how to run the application.
 
-
-
-## placeholder
-
-
-In addition to the tools above, fork and then clone the project starter code from the <a href="https://github.com/udacity/nd9990-c3-microservices-exercises/tree/master/project" target="_blank">Udacity GitHub repository</a>.
-
-
-
-# Getting started
+## Project Assessment
 To understand how you project will be assessed, see the <a href="https://review.udacity.com/#!/rubrics/2804/view" target="_blank">Project Rubric</a>
-
-Let's begin with setting up the resources that you will need while running the application either locally or on the cloud. 
