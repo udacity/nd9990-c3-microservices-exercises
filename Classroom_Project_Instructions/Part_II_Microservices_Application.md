@@ -13,7 +13,9 @@ Once you refactor the Udagram application, it will have the following services r
 1. Nginx as a reverse proxy server - for resolving multiple services running on the same port in separate containers. When different backend services are running on the same port, then a reverse proxy server directs client requests to the appropriate backend server and retrieves resources on behalf of the client.
 
 > Keep in mind that we don’t want to make any feature changes to the frontend or backend code. If a user visits the frontend web application, it should look the same regardless of whether the application is structured as a monolith or microservice.  
->
+
+
+
 
 
 Navigate to the project directory, and set up the environment variables again:
@@ -55,8 +57,7 @@ FROM node:13
 # Create app directory
 WORKDIR /usr/src/app
 # Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
+
 COPY package*.json ./
 RUN npm ci 
 # Bundle app source
@@ -64,10 +65,9 @@ COPY . .
 EXPOSE 8080
 CMD [ "npm", "run", "prod" ]
 ```
+> Note: A wildcard is used in the line `COPY package*.json ./` to ensure both package.json and package-lock.json are copied where available (npm@5+)
 
-It's not a hard requirement to use the exact same Dockerfile above. Feel free to use other base images or optimize the commands. 
-
-<br data-md>
+It's not a hard requirement to use the exact same Dockerfile above. Feel free to use other base images or optimize the commands.
 
 ### Refactor the Frontend Application
 
@@ -167,7 +167,7 @@ At this moment, your project directory would have the following structure:
 
 
 
-2. **Create images** - In the project's parent directory, create a [docker-compose-build.yaml](https://video.udacity-data.com/topher/2021/July/60e28b72_docker-compose-build/docker-compose-build.yaml) file. It will create an image for each individual service. Then, you can run the following command to create images locally:
+2. **Create Images** - In the project's parent directory, create a [docker-compose-build.yaml](https://video.udacity-data.com/topher/2021/July/60e28b72_docker-compose-build/docker-compose-build.yaml) file. It will create an image for each individual service. Then, you can run the following command to create images locally:
 ```bash
 # Make sure the Docker services are running in your local machine
 # Remove unused and dangling images

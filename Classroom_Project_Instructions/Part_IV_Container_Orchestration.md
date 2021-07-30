@@ -4,38 +4,18 @@ For the current part, verify that you have the `kubectl` utility installed local
 ```bash
 kubectl version --short
 ```
-In addition, you will create a Kubernetes cluster either via the AWS web console or optionally use the <a href="https://eksctl.io/introduction/#installation" target="_blank">EKSCTL</a> utility, more details to follow below. 
+In addition, you will create a Kubernetes cluster either via the AWS web console.
 
+> We use the AWS console and `kubectl` to create and interface with EKS. <a href="https://eksctl.io/introduction/#installation" target="_blank">eksctl</a> is an AWS-supported tool for creating clusters through a CLI interface. Note that we will provide limited support if you choose to use `eksctl` to manage your cluster.
 
 ### Create a Kubernetes cluster in AWS EKS service
-Create a** public **Kubernetes cluster and create and attach the nodegroup to the cluster. Decide the nodegroup size and configuration as you find suitable. You can use either the 
-1. AWS web console or 
+Create a** public **Kubernetes cluster and create and attach the nodegroup to the cluster. We will be using the AWS web console to create our EKS cluster.
 
-2. [Optional] EKSCTL, a command-line utility to create an EKS cluster and the associated resources in a single command. 
+#### Verify Cluster and Connection
+
 ```bash
-# Feel free to use the same/different flags as you like
-eksctl create cluster --name myCluster --region=us-east-1 --version=1.18 --nodes-min=2 --nodes-max=3
-# Recommended: You can see many more flags using "eksctl create cluster --help" command.
-# For example, you can set the node instance type using --node-type flag
+kubectl get nodes
 ```
-The default command above will set the following for you:
-  - An auto-generated name
-  - Two m5.large worker nodes. Recall that the worker nodes are the virtual machines, and the m5.large type defines that each VM will have 2 vCPUs, 8 GiB memory, and up to 10 Gbps network bandwidth.
-  - Use the Linux AMIs as the underlying machine image
-  - An autoscaling group with [2-3] nodes
-  - Importantly, it will write cluster credentials to the default config file locally. Meaning, EKSCTL will set up KUBECTL to communicate with your cluster. If you'd have created the cluster using the web console, you'll have to set up the *kubeconfig* manually. 
-
- ```bash
- # Once you get the success confirmation, run
- kubectl get nodes
- ```
-> Known issue: Sometimes, the cluster creation may fail in the **us-east-1** region. In such a case, use `--region=us-east-2` flag.
-
- If you run into issues, either go to your CLoudFormation console or run:
-```bash
-eksctl utils describe-stacks --region=us-east-1 --cluster=myCluster
-```
->**Known issue**: In `us-east-1` you are likely to get *UnsupportedAvailabilityZoneException*. Try another region in such a case. 
 
 
 ### Deployment
@@ -194,16 +174,6 @@ kubectl describe hpa
 
 
 ## Clean up
-1. Delete the EKS cluster. If you have used the EKSCTL utility, then use:
-```bash
-eksctl delete cluster --name=myCluster
-```
+1. Delete the EKS cluster.
 2. Delete the S3 bucket and RDS PostgreSQL database. 
-
-
-
-
-
-
-
 
