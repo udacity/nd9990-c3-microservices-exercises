@@ -10,8 +10,6 @@ kubectl logs <your pod name>
 ```
 
 
-
-
 ### Suggestions to Make Your Project Stand Out (Optional)   
 
 Try one or more of these to take your project to the next level.
