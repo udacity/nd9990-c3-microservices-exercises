@@ -1,37 +1,67 @@
 # Part 4 - Container Orchestration with Kubernetes
 
-For the current part, verify that you have the `kubectl` utility installed locally:
+## Prerequisites
+We will need to set up our CLI to interface with Kubernetes, our Kubernetes cluster in EKS, and connecting our CLI tool with the newly-created cluster.
+
+### kubectl
+For this section we will need to use `kubectl`. Verify that you have the `kubectl` utility installed locally by running the following command:
 ```bash
 kubectl version --short
 ```
-In addition, you will create a Kubernetes cluster either via the AWS web console.
+This should print a response with a `Client Version` if it's successful.
+
+### EKS Cluster Creation
+We will be creating an EKS cluster with the AWS console.
+
+Follow the instructions provided by AWS on [Creating an Amazon EKS Cluster](https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html).
+
+Make sure that you are following the steps for _AWS Management Console_ and not _eksctl_ or _AWS CLI_ (you are welcome to try creating a cluster with these alternate methods, but this course will be supporting the _AWS Management Console_ workflow).
+
+During the creation process, the EKS console will provide dropdown menus for selecting options such as IAM roles and VPCs. If none exist for you, follow the documentation that are linked in the EKS console.
+
+#### Tips
+* For the _Cluster Service Role_ in the creation process, create an [AWS role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) for EKS. Make sure you attach the policies for `AmazonEKSClusterPolicy`, `AmazonEC2ContainerServiceFullAccess`, and `AmazonEKSServicePolicy`.
+* If you don't have a [VPC](https://docs.aws.amazon.com/vpc/latest/userguide/how-it-works.html), create one with the `IPv4 CIDR block` value `10.0.0.0/16`. Make sure you select `No IPv6 CIDR block`.
+* Your _Cluster endpoint access_ should be set to _Public_
+* Your cluster may take ~20 minutes to be created. Once it's ready, it should be marked with an _Active_ status.
 
 > We use the AWS console and `kubectl` to create and interface with EKS. <a href="https://eksctl.io/introduction/#installation" target="_blank">eksctl</a> is an AWS-supported tool for creating clusters through a CLI interface. Note that we will provide limited support if you choose to use `eksctl` to manage your cluster.
 
-### Create a Kubernetes cluster in AWS EKS service
-Create a** public **Kubernetes cluster and create and attach the nodegroup to the cluster. We will be using the AWS web console to create our EKS cluster.
+### EKS Node Groups
+Once your cluster is created, we will need to add Node Groups so that the cluster has EC2 instances to process the workloads.
+
+Follow the instructions provided by AWS on [Creating a Managed Node Group](https://docs.aws.amazon.com/eks/latest/userguide/create-managed-node-group.html). Similar to before, make sure you're following the steps for _AWS Management Console_.
+
+#### Tips
+* For the _Node IAM Role_ in the creation process, create an [AWS role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) for EKS Node Groups. Make sure you attach the policies for `AmazonEKSWorkerNodePolicy`, `AmazonEC2ContainerRegistryReadOnly`, and `AmazonEKS_CNI_Policy`.
+* We recommend using `m5.large` instance types
+* We recommend setting 2 minimum nodes, 3 maximum nodes
+
+
+### Connecting kubectl with EKS
+Follow the instructions provided by AWS on [Create a kubeconfig for Amazon EKS](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html). This will make it such that your `kubectl` will be running against your newly-created EKS cluster.
 
 #### Verify Cluster and Connection
-
+Once `kubectl` is configured to communicate with your EKS cluster, run the following to validate that it's working:
 ```bash
 kubectl get nodes
 ```
+This should return information regarding the nodes that were created in your EKS clusteer.
 
 
 ### Deployment
-
 In this step, you will deploy the Docker containers for the frontend web application and backend API applications in their respective pods.
 
 Recall that while splitting the monolithic app into microservices, you used the values saved in the environment variables, as well as AWS CLI was configured locally. Similar values are required while instantiating containers from the Dockerhub images. 
 
-1. **ConfigMap:** Create *env-configmap.yaml*, and save all your configuration values (non-confidential environments variables) in that file. 
+1. **ConfigMap:** Create `env-configmap.yaml`, and save all your configuration values (non-confidential environments variables) in that file. 
 
 
-2. **Secret: **Do not store the PostgreSQL username and passwords in the *env-configmap.yaml* file. Instead, create *env-secret.yaml* file to store the confidential values, such as login credentials. 
+2. **Secret:** Do not store the PostgreSQL username and passwords in the `env-configmap.yaml` file. Instead, create `env-secret.yaml` file to store the confidential values, such as login credentials. Unlike the AWS credentials, these values do not need to be Base64 encoded.
 
 
-3. **Secret: **Create *aws-secret.yaml* file to store your AWS login credentials. Replace `___INSERT_AWS_CREDENTIALS_FILE__BASE64____` with the Base64 encoded credentials (not the regular username/password). 
-     * Mac/Linux users: If you've configured your AWS CLI locally, check the contents of *~/.aws/credentials* file using `cat ~/.aws/credentials` . It will display the *aws_access_key_id* and *aws_secret_access_key* for your AWS profile(s). Now, you need to select the applicable pair of *aws_access_key* from the output of the `cat` command above and convert that string into `base64` . You use commands, such as:
+3. **Secret:** Create *aws-secret.yaml* file to store your AWS login credentials. Replace `___INSERT_AWS_CREDENTIALS_FILE__BASE64____` with the Base64 encoded credentials (not the regular username/password). 
+     * Mac/Linux users: If you've configured your AWS CLI locally, check the contents of `~/.aws/credentials` file using `cat ~/.aws/credentials` . It will display the `aws_access_key_id` and `aws_secret_access_key` for your AWS profile(s). Now, you need to select the applicable pair of `aws_access_key` from the output of the `cat` command above and convert that string into `base64` . You use commands, such as:
 ```bash
 # Use a combination of head/tail command to identify lines you want to convert to base64
 # You just need two correct lines: a right pair of aws_access_key_id and aws_secret_access_key
@@ -150,18 +180,12 @@ printenv | grep POST
 # This is helpful to see is backend is working by opening a bash into the frontend container
 ```
 
-
 3. When you are sure that all pods are running successfully, then use developer tools in the browser to see the precise reason for the error. 
   - If your frontend is loading properly, and showing *Error: Uncaught (in promise): HttpErrorResponse: {"headers":{"normalizedNames":{},"lazyUpdate":null,"headers":{}},"status":0,"statusText":"Unknown Error"....*, it is possibly because the *udagram-frontend/src/environments/environment.ts* file has incorrectly defined the ‘apiHost’ to whom forward the requests. 
   - If your frontend is **not** not loading, and showing *Error: Uncaught (in promise): HttpErrorResponse: {"headers":{"normalizedNames":{},"lazyUpdate":null,"headers":{}},"status":0,"statusText":"Unknown Error", ....* , it is possibly because URL variable is not set correctly. 
-  - In the case of *Failed to load resource: net::ERR_CONNECTION_REFUSED* error as well, it is possibly because the URL variable is not set correctly. 
-
-
-4. Use the Postman tool to evaluate backend APIs. This is particularly useful when you get CORS-related errors. In the worst case, you can make `origin: "*"` in the */src/server.ts* files for */feed* and */user* services. Though, it's not a recommended practice in production. So, once it works with `origin: "*"`, you must figure out how to make it work for a specific frontend URL. 
-
+  - In the case of *Failed to load resource: net::ERR_CONNECTION_REFUSED* error as well, it is possibly because the URL variable is not set correctly.
 
 ## Screenshots
-
 So that we can verify that your project is deployed, please include the screenshots of the following commands with your completed project. 
 ```bash
 # Kubernetes pods are deployed properly
@@ -171,9 +195,3 @@ kubectl describe services
 # You have horizontal scaling set against CPU usage
 kubectl describe hpa
 ```
-
-
-## Clean up
-1. Delete the EKS cluster.
-2. Delete the S3 bucket and RDS PostgreSQL database. 
-
