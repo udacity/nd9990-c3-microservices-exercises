@@ -10,8 +10,6 @@ kubectl logs <your pod name>
 ```
 
 
-
-
 ### Suggestions to Make Your Project Stand Out (Optional)   
 
 Try one or more of these to take your project to the next level.
@@ -35,4 +33,7 @@ The project will be submitted as a link to a GitHub repo or a zip file and shoul
 * Kubernetes `kubectl describe hpa` output  
 * Kubernetes `kubectl logs <your pod name>` output 
 
-
+## Clean up
+Once we are done with our exercises, it helps to remove our AWS resources so that we don't accrue unnecessary charges to our AWS balance.
+1. Delete the EKS cluster.
+2. Delete the S3 bucket and RDS PostgreSQL database.
