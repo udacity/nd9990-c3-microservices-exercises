@@ -1,3 +1,6 @@
+language: 
+  -node_js
+  
 services:
   - docker
 
@@ -7,7 +10,7 @@ script:
   - docker tag udagram-api-user eperuza/udagram-api-user:v1
   - docker tag udagram-frontend eperuza/udagram-frontend:v1
   - docker tag udagram-reverseproxy eperuza/udagram-reverseproxy:v1
-  
+
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push eperuza/udagram-api-feed:v1
