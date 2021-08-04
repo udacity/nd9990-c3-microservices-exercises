@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: api-user
-  name: api-user
+    service: udagram-api-user
+  name: udagram-api-user
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: api-user
+      service: udagram-api-user
   template:
     metadata:
       labels:
-        service: api-user
+        service: udagram-api-user
     spec:
       containers:
         - image: eperuza/udagram-api-user:v1
@@ -56,4 +56,6 @@ spec:
                 secretKeyRef:
                   name: env-secret
                   key: POSTGRES_USERNAME
+      imagePullSecrets:
+      - name: regcred
       restartPolicy: Always

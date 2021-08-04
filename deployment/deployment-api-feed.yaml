@@ -2,17 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: api-feed
-  name: api-feed
+    service: udagram-api-feed
+  name: udagram-api-feed
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: api-feed
+      service: udagram-api-feed
   template:
     metadata:
       labels:
-        service: api-feed
+        service: udagram-api-feed
     spec:
       containers:
         - image: eperuza/udagram-api-feed:v1
@@ -76,6 +76,8 @@ spec:
               mountPath: "/root/.aws/"
               readOnly: true
       restartPolicy: Always
+      imagePullSecrets:
+      - name: regcred
       volumes:
         - name: aws-secret
           secret:
