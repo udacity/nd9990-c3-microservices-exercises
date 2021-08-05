@@ -10,6 +10,6 @@ data:
   AWS_BUCKET: udagram-project3-dev
   AWS_PROFILE: default
   JWT_SECRET: hello
-  URL: http://localhost:8100
+  URL: a27e530262ca446278282730d33f432e-1469479328.us-east-2.elb.amazonaws.com
 
 
