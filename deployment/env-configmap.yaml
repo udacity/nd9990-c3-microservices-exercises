@@ -5,7 +5,7 @@ metadata:
 data:
   # Configuration values can be set as key-value properties
   POSTGRES_HOST: udagram-project3-db-dev.c5jrazr64k3b.us-east-2.rds.amazonaws.com
-  POSTGRES_DB: udagram_project3_db_de
+  POSTGRES_DB: udagram_project3_db_dev
   AWS_REGION: us-east-2
   AWS_BUCKET: udagram-project3-dev
   AWS_PROFILE: default
