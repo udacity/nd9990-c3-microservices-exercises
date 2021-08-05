@@ -15,7 +15,7 @@ spec:
         service: udagram-api-feed
     spec:
       containers:
-        - image: eperuza/udagram-api-feed:v1
+        - image: eperuza/udagram-api-feed:v2
           name: udagram-api-feed
           imagePullPolicy: Always
           resources:

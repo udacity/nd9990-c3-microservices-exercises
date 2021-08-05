@@ -15,7 +15,7 @@ spec:
         service: udagram-api-user
     spec:
       containers:
-        - image: eperuza/udagram-api-user:v1
+        - image: eperuza/udagram-api-user:v2
           name: udagram-api-user
           imagePullPolicy: Always
           resources:
