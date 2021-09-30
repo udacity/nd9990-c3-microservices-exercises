@@ -1,7 +1,7 @@
 version: "3"
 services:
   reverseproxy:
-      image: reverseproxy
+      image: messayed/reverseproxy
       ports:
           - 8080:8080
       restart: always
@@ -9,32 +9,32 @@ services:
         - backend-user
         - backend-feed
   backend-user:
-    image: udagram-api-user
+    image: messayed/udagram-api-user
     environment:
-      POSTGRES_USERNAME: $POSTGRES_USERNAME
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD 
-      POSTGRES_DB: $POSTGRES_DB 
-      POSTGRES_HOST: $POSTGRES_HOST
-      AWS_REGION: $AWS_REGION 
-      AWS_PROFILE: $AWS_PROFILE 
-      AWS_BUCKET: $AWS_BUCKET
-      JWT_SECRET: $JWT_SECRET
+      POSTGRES_USERNAME: process.env.POSTGRES_USERNAME
+      POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD 
+      POSTGRES_DB: process.env.POSTGRES_DB 
+      POSTGRES_HOST: process.env.POSTGRES_HOST
+      AWS_REGION: process.env.AWS_REGION 
+      AWS_PROFILE: process.env.AWS_PROFILE 
+      AWS_BUCKET: process.env.AWS_BUCKET
+      JWT_SECRET: process.env.JWT_SECRET
       URL: "http://localhost:8100"
   backend-feed:
-    image: udagram-api-feed
+    image: messayed/udagram-api-feed
     volumes:
       - $HOME/.aws:/root/.aws
     environment:
-      POSTGRES_USERNAME: $POSTGRES_USERNAME
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD 
-      POSTGRES_DB: $POSTGRES_DB
-      POSTGRES_HOST: $POSTGRES_HOST
-      AWS_REGION: $AWS_REGION
-      AWS_PROFILE: $AWS_PROFILE 
-      AWS_BUCKET: $AWS_BUCKET
-      JWT_SECRET: $JWT_SECRET
+      POSTGRES_USERNAME: process.env.POSTGRES_USERNAME
+      POSTGRES_PASSWORD: process.env.POSTGRES_PASSWORD 
+      POSTGRES_DB: process.env.POSTGRES_DB
+      POSTGRES_HOST: process.env.POSTGRES_HOST
+      AWS_REGION: process.env.AWS_REGION
+      AWS_PROFILE: process.env.AWS_PROFILE 
+      AWS_BUCKET: process.env.AWS_BUCKET
+      JWT_SECRET: process.env.JWT_SECRET
       URL: "http://localhost:8100"
   frontend:
-    image: udagram-frontend:local
+    image: messayed/udagram-frontend:local
     ports:
       - "8100:80"
