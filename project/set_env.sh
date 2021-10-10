@@ -1,10 +1,10 @@
 # This file is used for convenience of local development.
-export POSTGRES_USERNAME=antonio
-export POSTGRES_PASSWORD=Aw3s0meyou
-export POSTGRES_HOST=ad-monolith-dev.clsnflhd2bh7.us-east-1.rds.amazonaws.com
+export POSTGRES_USERNAME=process.env.POSTGRES_USERNAME
+export POSTGRES_PASSWORD=process.env.POSTGRES_PASSWORD
+export POSTGRES_HOST=process.env.POSTGRES_HOST
 export POSTGRES_DB=postgres
-export AWS_BUCKET=monolith-proj-180228063476-dev
+export AWS_BUCKET=process.env.AWS_BUCKET
 export AWS_REGION=us-east-1
 export AWS_PROFILE=default
-export JWT_SECRET=hello
+export JWT_SECRET=process.env.JWT_SECRET
 export URL=http://localhost:8100
