@@ -15,4 +15,4 @@ services:
   frontend:
     build:
       context: ./udagram-frontend
-    image: udagram-frontend:local
+    image: dockerid1926/udagram-frontend:local
