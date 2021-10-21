@@ -1,0 +1,22 @@
+{
+  "name": "udacityproj",
+  "version": "1.0.0",
+  "description": "my monolithics service",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaguar48/nd9990-c3-microservices-exercises.git"
+  },
+  "keywords": [
+    "microservices"
+  ],
+  "author": "stanley'",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaguar48/nd9990-c3-microservices-exercises/issues"
+  },
+  "homepage": "https://github.com/jaguar48/nd9990-c3-microservices-exercises#readme"
+}
