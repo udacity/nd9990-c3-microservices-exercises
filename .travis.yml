@@ -20,13 +20,13 @@ before_script:
 
 script:
   - docker --version # print the version for logging
-  - docker build -t reverseproxy ./udagram-reverseproxy
+  - docker build -t reverseproxy ./project/udagram-reverseproxy
   - docker tag reverseproxy erustemoarvato/reverseproxy:v1
-  - docker build -t udagram-api-feed ./udagram-api-feed
+  - docker build -t udagram-api-feed ./project/udagram-api-feed
   - docker tag udagram-api-feed erustemoarvato/udagram-api-feed:v1
-  - docker build -t udagram-api-user ./udagram-api-user
+  - docker build -t udagram-api-user ./project/udagram-api-user
   - docker tag udagram-api-user erustemoarvato/udagram-api-user:v1
-  - docker build -t udagram-frontend ./udagram-frontend
+  - docker build -t udagram-frontend ./project/udagram-frontend
   - docker tag udagram-frontend erustemoarvato/udagram-frontend:v1
 
 after_success:
