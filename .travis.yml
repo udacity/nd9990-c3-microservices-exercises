@@ -1,11 +1,11 @@
 language: node_js
 node_js:
-  - 14
+  - 13
 
 services:
   - docker
 
-# only master
+# only master test
 branches:
   only:
   - master
