@@ -5,6 +5,7 @@ node_js:
 services:
   - docker
 
+# only mastter
 branches:
   only:
   - master
