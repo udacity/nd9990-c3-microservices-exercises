@@ -630,7 +630,7 @@
 		{
 			"id": "3e3ea131-5328-4f50-8fe1-516e3995917d",
 			"key": "host",
-			"value": "http://localhost:8080",
+			"value": "http://localhost:8081",
 			"type": "string"
 		}
 	]
