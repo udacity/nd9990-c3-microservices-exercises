@@ -13,6 +13,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "^8.1.2",
     "@angular/common": "^8.2.14",
     "@angular/core": "^8.2.14",
     "@angular/forms": "^8.2.14",
@@ -26,16 +27,15 @@
     "@ionic/angular": "^4.1.0",
     "@ionic/cli": "^6.16.3",
     "core-js": "^2.5.4",
-    "fsevents": "^2.3.2",
+    "node-sass": "^4.14.1",
     "rxjs": "~6.5.4",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.12.3",
-    "@angular-devkit/build-angular": "^0.803.24",
+    "@angular-devkit/build-angular": "^0.803.29",
     "@angular-devkit/core": "~7.2.3",
     "@angular-devkit/schematics": "~7.2.3",
-    "@angular/cli": "~8.3.25",
     "@angular/compiler": "~8.2.14",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
@@ -56,7 +56,10 @@
     "protractor": "~5.4.0",
     "ts-node": "~8.0.0",
     "tslint": "~5.12.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.4.5"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  }
 }
