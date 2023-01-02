@@ -12,14 +12,14 @@ export const config = {
   //   'secret': process.env.JWT_SECRET,
   // },
   'username': 'nguyenht10',
-  'password': 'hoang4121',
+  'password': 'hOANG4121',
   'database': 'udagram',
-  'host': 'database-2.ci9fsc8ymunc.us-east-1.rds.amazonaws.com',
+  'host': 'database-1.cw9qbrlmtloq.us-east-1.rds.amazonaws.com',
   'dialect': 'postgres',
   'aws_region': 'us-east-1',
   'aws_profile': 'default',
-  'aws_media_bucket': 'bucket-udacity',
-  'url': 'http://localhost:8100',
+  'aws_media_bucket': 'nguyen-bucket',
+  'url': 'http://a6dddcb85d8014d6f813e1528bde5634-746338646.us-east-1.elb.amazonaws.com:8100',
   'jwt': {
     'secret': 'testing',
   }
