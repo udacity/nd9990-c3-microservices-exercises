@@ -8,7 +8,7 @@ This package contains type definitions for jsonwebtoken (https://github.com/auth
 Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/jsonwebtoken.
 
 ### Additional Details
- * Last updated: Mon, 17 Jan 2022 12:01:30 GMT
+ * Last updated: Wed, 24 Aug 2022 10:02:25 GMT
  * Dependencies: [@types/node](https://npmjs.com/package/@types/node)
  * Global values: none
 

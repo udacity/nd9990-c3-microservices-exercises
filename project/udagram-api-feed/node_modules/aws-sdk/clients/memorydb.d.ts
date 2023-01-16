@@ -172,6 +172,22 @@ declare class MemoryDB extends Service {
    */
   describeParameters(callback?: (err: AWSError, data: MemoryDB.Types.DescribeParametersResponse) => void): Request<MemoryDB.Types.DescribeParametersResponse, AWSError>;
   /**
+   * Returns information about reserved nodes for this account, or about a specified reserved node.
+   */
+  describeReservedNodes(params: MemoryDB.Types.DescribeReservedNodesRequest, callback?: (err: AWSError, data: MemoryDB.Types.DescribeReservedNodesResponse) => void): Request<MemoryDB.Types.DescribeReservedNodesResponse, AWSError>;
+  /**
+   * Returns information about reserved nodes for this account, or about a specified reserved node.
+   */
+  describeReservedNodes(callback?: (err: AWSError, data: MemoryDB.Types.DescribeReservedNodesResponse) => void): Request<MemoryDB.Types.DescribeReservedNodesResponse, AWSError>;
+  /**
+   * Lists available reserved node offerings.
+   */
+  describeReservedNodesOfferings(params: MemoryDB.Types.DescribeReservedNodesOfferingsRequest, callback?: (err: AWSError, data: MemoryDB.Types.DescribeReservedNodesOfferingsResponse) => void): Request<MemoryDB.Types.DescribeReservedNodesOfferingsResponse, AWSError>;
+  /**
+   * Lists available reserved node offerings.
+   */
+  describeReservedNodesOfferings(callback?: (err: AWSError, data: MemoryDB.Types.DescribeReservedNodesOfferingsResponse) => void): Request<MemoryDB.Types.DescribeReservedNodesOfferingsResponse, AWSError>;
+  /**
    * Returns details of the service updates
    */
   describeServiceUpdates(params: MemoryDB.Types.DescribeServiceUpdatesRequest, callback?: (err: AWSError, data: MemoryDB.Types.DescribeServiceUpdatesResponse) => void): Request<MemoryDB.Types.DescribeServiceUpdatesResponse, AWSError>;
@@ -204,11 +220,11 @@ declare class MemoryDB extends Service {
    */
   describeUsers(callback?: (err: AWSError, data: MemoryDB.Types.DescribeUsersResponse) => void): Request<MemoryDB.Types.DescribeUsersResponse, AWSError>;
   /**
-   * Used to failover a shard
+   * Used to failover a shard. This API is designed for testing the behavior of your application in case of MemoryDB failover. It is not designed to be used as a production-level tool for initiating a failover to overcome a problem you may have with the cluster. Moreover, in certain conditions such as large scale operational events, Amazon may block this API. 
    */
   failoverShard(params: MemoryDB.Types.FailoverShardRequest, callback?: (err: AWSError, data: MemoryDB.Types.FailoverShardResponse) => void): Request<MemoryDB.Types.FailoverShardResponse, AWSError>;
   /**
-   * Used to failover a shard
+   * Used to failover a shard. This API is designed for testing the behavior of your application in case of MemoryDB failover. It is not designed to be used as a production-level tool for initiating a failover to overcome a problem you may have with the cluster. Moreover, in certain conditions such as large scale operational events, Amazon may block this API. 
    */
   failoverShard(callback?: (err: AWSError, data: MemoryDB.Types.FailoverShardResponse) => void): Request<MemoryDB.Types.FailoverShardResponse, AWSError>;
   /**
@@ -227,6 +243,14 @@ declare class MemoryDB extends Service {
    * Lists all tags currently on a named resource. A tag is a key-value pair where the key and value are case-sensitive. You can use tags to categorize and track your MemoryDB resources. For more information, see Tagging your MemoryDB resources 
    */
   listTags(callback?: (err: AWSError, data: MemoryDB.Types.ListTagsResponse) => void): Request<MemoryDB.Types.ListTagsResponse, AWSError>;
+  /**
+   * Allows you to purchase a reserved node offering. Reserved nodes are not eligible for cancellation and are non-refundable.
+   */
+  purchaseReservedNodesOffering(params: MemoryDB.Types.PurchaseReservedNodesOfferingRequest, callback?: (err: AWSError, data: MemoryDB.Types.PurchaseReservedNodesOfferingResponse) => void): Request<MemoryDB.Types.PurchaseReservedNodesOfferingResponse, AWSError>;
+  /**
+   * Allows you to purchase a reserved node offering. Reserved nodes are not eligible for cancellation and are non-refundable.
+   */
+  purchaseReservedNodesOffering(callback?: (err: AWSError, data: MemoryDB.Types.PurchaseReservedNodesOfferingResponse) => void): Request<MemoryDB.Types.PurchaseReservedNodesOfferingResponse, AWSError>;
   /**
    * Modifies the parameters of a parameter group to the engine or system default value. You can reset specific parameters by submitting a list of parameter names. To reset the entire parameter group, specify the AllParameters and ParameterGroupName parameters.
    */
@@ -495,6 +519,10 @@ declare namespace MemoryDB {
      * When set to true, the cluster will automatically receive minor engine version upgrades after launch.
      */
     AutoMinorVersionUpgrade?: BooleanOptional;
+    /**
+     * Enables data tiering. Data tiering is only supported for clusters using the r6gd node type. This parameter must be set when using r6gd nodes. For more information, see Data tiering.
+     */
+    DataTiering?: DataTieringStatus;
   }
   export interface ClusterConfiguration {
     /**
@@ -652,7 +680,7 @@ declare namespace MemoryDB {
      */
     SecurityGroupIds?: SecurityGroupIdsList;
     /**
-     * Specifies the weekly time range during which maintenance on the cluster is performed. It is specified as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period.
+     * Specifies the weekly time range during which maintenance on the cluster is performed. It is specified as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Valid values for ddd are:    sun     mon     tue     wed     thu     fri     sat    Example: sun:23:00-mon:01:30 
      */
     MaintenanceWindow?: String;
     /**
@@ -703,6 +731,10 @@ declare namespace MemoryDB {
      * When set to true, the cluster will automatically receive minor engine version upgrades after launch.
      */
     AutoMinorVersionUpgrade?: BooleanOptional;
+    /**
+     * Enables data tiering. Data tiering is only supported for clusters using the r6gd node type. This parameter must be set when using r6gd nodes. For more information, see Data tiering.
+     */
+    DataTiering?: BooleanOptional;
   }
   export interface CreateClusterResponse {
     /**
@@ -806,6 +838,7 @@ declare namespace MemoryDB {
      */
     User?: User;
   }
+  export type DataTieringStatus = "true"|"false"|string;
   export interface DeleteACLRequest {
     /**
      * The name of the Access Control List to delete
@@ -1053,6 +1086,82 @@ declare namespace MemoryDB {
      * A list of parameters specific to a particular parameter group. Each element in the list contains detailed information about one parameter.
      */
     Parameters?: ParametersList;
+  }
+  export interface DescribeReservedNodesOfferingsRequest {
+    /**
+     * The offering identifier filter value. Use this parameter to show only the available offering that matches the specified reservation identifier.
+     */
+    ReservedNodesOfferingId?: String;
+    /**
+     * The node type for the reserved nodes. For more information, see Supported node types.
+     */
+    NodeType?: String;
+    /**
+     * Duration filter value, specified in years or seconds. Use this parameter to show only reservations for a given duration.
+     */
+    Duration?: String;
+    /**
+     * The offering type filter value. Use this parameter to show only the available offerings matching the specified offering type. Valid values: "All Upfront"|"Partial Upfront"| "No Upfront"
+     */
+    OfferingType?: String;
+    /**
+     * The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results can be retrieved.
+     */
+    MaxResults?: IntegerOptional;
+    /**
+     * An optional marker returned from a prior request. Use this marker for pagination of results from this operation. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.
+     */
+    NextToken?: String;
+  }
+  export interface DescribeReservedNodesOfferingsResponse {
+    /**
+     * An optional marker returned from a prior request. Use this marker for pagination of results from this operation. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.
+     */
+    NextToken?: String;
+    /**
+     * Lists available reserved node offerings.
+     */
+    ReservedNodesOfferings?: ReservedNodesOfferingList;
+  }
+  export interface DescribeReservedNodesRequest {
+    /**
+     * The reserved node identifier filter value. Use this parameter to show only the reservation that matches the specified reservation ID.
+     */
+    ReservationId?: String;
+    /**
+     * The offering identifier filter value. Use this parameter to show only purchased reservations matching the specified offering identifier.
+     */
+    ReservedNodesOfferingId?: String;
+    /**
+     * The node type filter value. Use this parameter to show only those reservations matching the specified node type. For more information, see Supported node types.
+     */
+    NodeType?: String;
+    /**
+     * The duration filter value, specified in years or seconds. Use this parameter to show only reservations for this duration.
+     */
+    Duration?: String;
+    /**
+     * The offering type filter value. Use this parameter to show only the available offerings matching the specified offering type. Valid values: "All Upfront"|"Partial Upfront"| "No Upfront"
+     */
+    OfferingType?: String;
+    /**
+     * The maximum number of records to include in the response. If more records exist than the specified MaxRecords value, a marker is included in the response so that the remaining results can be retrieved.
+     */
+    MaxResults?: IntegerOptional;
+    /**
+     * An optional marker returned from a prior request. Use this marker for pagination of results from this operation. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.
+     */
+    NextToken?: String;
+  }
+  export interface DescribeReservedNodesResponse {
+    /**
+     * An optional marker returned from a prior request. Use this marker for pagination of results from this operation. If this parameter is specified, the response includes only records beyond the marker, up to the value specified by MaxRecords.
+     */
+    NextToken?: String;
+    /**
+     * Returns information about reserved nodes for this account, or about a specified reserved node.
+     */
+    ReservedNodes?: ReservedNodeList;
   }
   export interface DescribeServiceUpdatesRequest {
     /**
@@ -1376,12 +1485,121 @@ declare namespace MemoryDB {
     Status?: ServiceUpdateStatus;
   }
   export type PendingModifiedServiceUpdateList = PendingModifiedServiceUpdate[];
+  export interface PurchaseReservedNodesOfferingRequest {
+    /**
+     * The ID of the reserved node offering to purchase.
+     */
+    ReservedNodesOfferingId: String;
+    /**
+     * A customer-specified identifier to track this reservation.
+     */
+    ReservationId?: String;
+    /**
+     * The number of node instances to reserve.
+     */
+    NodeCount?: IntegerOptional;
+    /**
+     * A list of tags to be added to this resource. A tag is a key-value pair. A tag key must be accompanied by a tag value, although null is accepted.
+     */
+    Tags?: TagList;
+  }
+  export interface PurchaseReservedNodesOfferingResponse {
+    /**
+     * Represents the output of a PurchaseReservedNodesOffering operation.
+     */
+    ReservedNode?: ReservedNode;
+  }
+  export interface RecurringCharge {
+    /**
+     * The amount of the recurring charge to run this reserved node.
+     */
+    RecurringChargeAmount?: Double;
+    /**
+     * The frequency of the recurring price charged to run this reserved node.
+     */
+    RecurringChargeFrequency?: String;
+  }
+  export type RecurringChargeList = RecurringCharge[];
   export interface ReplicaConfigurationRequest {
     /**
      * The number of replicas to scale up or down to
      */
     ReplicaCount?: Integer;
   }
+  export interface ReservedNode {
+    /**
+     * A customer-specified identifier to track this reservation.
+     */
+    ReservationId?: String;
+    /**
+     * The ID of the reserved node offering to purchase.
+     */
+    ReservedNodesOfferingId?: String;
+    /**
+     * The node type for the reserved nodes.
+     */
+    NodeType?: String;
+    /**
+     * The time the reservation started.
+     */
+    StartTime?: TStamp;
+    /**
+     * The duration of the reservation in seconds.
+     */
+    Duration?: Integer;
+    /**
+     * The fixed price charged for this reserved node.
+     */
+    FixedPrice?: Double;
+    /**
+     * The number of nodes that have been reserved.
+     */
+    NodeCount?: Integer;
+    /**
+     * The offering type of this reserved node.
+     */
+    OfferingType?: String;
+    /**
+     * The state of the reserved node.
+     */
+    State?: String;
+    /**
+     * The recurring price charged to run this reserved node.
+     */
+    RecurringCharges?: RecurringChargeList;
+    /**
+     * The Amazon Resource Name (ARN) of the reserved node.
+     */
+    ARN?: String;
+  }
+  export type ReservedNodeList = ReservedNode[];
+  export interface ReservedNodesOffering {
+    /**
+     * The offering identifier.
+     */
+    ReservedNodesOfferingId?: String;
+    /**
+     * The node type for the reserved nodes. For more information, see Supported node types.
+     */
+    NodeType?: String;
+    /**
+     * The duration of the reservation in seconds.
+     */
+    Duration?: Integer;
+    /**
+     * The fixed price charged for this reserved node.
+     */
+    FixedPrice?: Double;
+    /**
+     * The offering type of this reserved node.
+     */
+    OfferingType?: String;
+    /**
+     * The recurring price charged to run this reserved node.
+     */
+    RecurringCharges?: RecurringChargeList;
+  }
+  export type ReservedNodesOfferingList = ReservedNodesOffering[];
   export interface ResetParameterGroupRequest {
     /**
      * The name of the parameter group to reset.
@@ -1553,6 +1771,10 @@ declare namespace MemoryDB {
      * The configuration of the cluster from which the snapshot was taken
      */
     ClusterConfiguration?: ClusterConfiguration;
+    /**
+     * Enables data tiering. Data tiering is only supported for clusters using the r6gd node type. This parameter must be set when using r6gd nodes. For more information, see Data tiering.
+     */
+    DataTiering?: DataTieringStatus;
   }
   export type SnapshotArnsList = String[];
   export type SnapshotList = Snapshot[];
@@ -1687,7 +1909,7 @@ declare namespace MemoryDB {
      */
     SecurityGroupIds?: SecurityGroupIdsList;
     /**
-     * The maintenance window to update
+     * Specifies the weekly time range during which maintenance on the cluster is performed. It is specified as a range in the format ddd:hh24:mi-ddd:hh24:mi (24H Clock UTC). The minimum maintenance window is a 60 minute period. Valid values for ddd are:    sun     mon     tue     wed     thu     fri     sat    Example: sun:23:00-mon:01:30 
      */
     MaintenanceWindow?: String;
     /**

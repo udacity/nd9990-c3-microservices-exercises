@@ -1,6 +1,6 @@
 {
     "name": "@types/jsonwebtoken",
-    "version": "8.5.8",
+    "version": "8.5.9",
     "description": "TypeScript definitions for jsonwebtoken",
     "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/jsonwebtoken",
     "license": "MIT",
@@ -77,6 +77,6 @@
     "dependencies": {
         "@types/node": "*"
     },
-    "typesPublisherContentHash": "fa9db8bf3d45899001319a89d33c8a49d294c5214b7549967ba4033dc87cc1a3",
-    "typeScriptVersion": "3.8"
+    "typesPublisherContentHash": "5d1f6ea66089a8298a1a19b2f519936a3a94aea2974dab382dd4e93177bdeb3d",
+    "typeScriptVersion": "4.0"
 }
