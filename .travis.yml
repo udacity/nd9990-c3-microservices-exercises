@@ -1,0 +1,50 @@
+#language: node_js
+#node_js:
+#  - 12
+
+services:
+  - docker
+
+# Pre-testing installs
+install:
+  - echo "nothing needs to be installed"
+
+# Scripts to be run such as tests
+before_script:
+  - echo "no tests"
+
+script:
+  - docker --version # print the version for logging
+<<<<<<< HEAD:project/.travis.yml
+  - docker build -t udagram-api-feed ./udagram-api-feed
+  - docker tag udagram-api-feed neconero/udagram-api-feed:v4
+  - docker build -t udagram-api-user ./udagram-api-user
+  - docker tag udagram-api-user neconero/udagram-api-user:v4
+  - docker build -t udagram-frontend ./udagram-frontend
+  - docker tag udagram-frontend neconero/udagram-frontend:v4
+  - docker build -t reverseproxy ./udagram-reverseproxy
+  - docker tag reverseproxy neconero/udagram-reverseproxy:v4
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push neconero/udagram-api-feed:v4
+  - docker push neconero/udagram-api-user:v4
+  - docker push neconero/udagram-frontend:v4
+  - docker push neconero/udagram-reverseproxy:v4
+=======
+  - docker build -t udagram-api-feed ./project/udagram-api-feed
+  - docker tag udagram-api-feed sudkul/udagram-api-feed:v1
+  - docker build -t udagram-api-user ./project/udagram-api-user
+  - docker tag udagram-api-user sudkul/udagram-api-user:v1
+  - docker build -t udagram-frontend:local ./project/udagram-frontend
+  - docker tag udagram-frontend:local sudkul/udagram-frontend:v1
+  - docker build -t udagram-reverseproxy ./project/udagram-reverseproxy
+  - docker tag udagram-reverseproxy sudkul/udagram-reverseproxy:v1
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push sudkul/udagram-api-feed:v1
+  - docker push sudkul/udagram-api-user:v1
+  - docker push sudkul/udagram-frontend:v1
+  - docker push sudkul/udagram-reverseproxy:v1
+>>>>>>> e69495e660db5295ad26c3835a8ea20186564092:.travis.yml
