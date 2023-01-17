@@ -15,7 +15,7 @@ spec:
         app: reverseproxy
     spec:
       containers:
-      - image: neconero/reverseproxy
+      - image: neconero/udagram-reverseproxy
         name: reverseproxy
         imagePullPolicy: Always          
         resources:
